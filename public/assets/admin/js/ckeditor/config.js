@@ -27,5 +27,5 @@ CKEDITOR.editorConfig = function( config ) {
   config.extraPlugins = 'uploadimage';
   config.extraPlugins = 'uploadwidget';
   config.extraPlugins = 'myslider,myVideoPlugin';
-  config.contentsCss = ['/assets/css/ckedit.css'];
+  //config.contentsCss = ['/assets/admin/css/ckedit.css'];
 };

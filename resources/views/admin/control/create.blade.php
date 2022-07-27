@@ -13,7 +13,8 @@
                 <div class="card-body pb-0"><h3>Yeni Kayıt</h3></div>
             </div>
             <div class="card-body">
-                <form class="form" enctype="multipart/form-data" method="POST" action="{{route('admin.control.store')}}">
+                <form class="form" id="create_form" enctype="multipart/form-data" method="POST"
+                      action="{{route('admin.control.store')}}">
                     @csrf
                     <div class="card-body">
                         <div class="form-group">
@@ -38,17 +39,8 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <div class="col-lg-1">
-                                <label>Pasif/Aktif</label>
-                                <span class="switch switch-outline switch-icon switch-success">
-                                        <label>
-                                            <input type="checkbox" checked name="status"/>
-                                            <span></span>
-                                        </label>
-                                    </span>
 
-                            </div>
-                            <div class="col-lg-11">
+                            <div class="col-lg-12">
                                 <label>Url</label>
                                 <input type="text" name="url" class="form-control form-control-solid"
                                        placeholder="harici url"/>
@@ -72,13 +64,13 @@
                                 <div class="image-input image-input-outline" id="kt_image_4"
                                      style="">
                                     <div class="image-input-wrapper"
-                                         style="background-image: url({{asset('assets/admin/media/svg/icons/Files/Pictures1.svg')}})"></div>
+                                         style="background-image: url({{asset('assets/admin/media/svg/icons/Files/image_back.png')}})"></div>
                                     <label
                                         class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
                                         data-action="change" data-toggle="tooltip" title=""
                                         data-original-title="Resmi değiştir">
                                         <i class="ki ki-plus text-muted"></i>
-                                        <input type="file" name="file"/>
+                                        <input type="file" id="file" name="file"/>
 
                                     </label>
 
@@ -99,13 +91,13 @@
                                 <div class="image-input image-input-outline" id="kt_image_5"
                                      style="">
                                     <div class="image-input-wrapper"
-                                         style="background-image: url({{asset('assets/admin/media/svg/icons/Files/Pictures1.svg')}})"></div>
+                                         style="background-image: url({{asset('assets/admin/media/svg/icons/Files/image_back.png')}})"></div>
                                     <label
                                         class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
                                         data-action="change" data-toggle="tooltip" title=""
                                         data-original-title="Resmi değiştir">
                                         <i class="ki ki-plus text-muted"></i>
-                                        <input type="file" name="file2" accept=".png, .jpg, .jpeg"/>
+                                        <input type="file" id="file2" name="file2" accept=".png, .jpg, .jpeg"/>
 
                                     </label>
 
@@ -126,13 +118,13 @@
                                 <div class="image-input image-input-outline" id="kt_image_6"
                                      style="">
                                     <div class="image-input-wrapper"
-                                         style="background-image: url({{asset('assets/admin/media/svg/icons/Files/Pictures1.svg')}})"></div>
+                                         style="background-image: url({{asset('assets/admin/media/svg/icons/Files/image_back.png')}})"></div>
                                     <label
                                         class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
                                         data-action="change" data-toggle="tooltip" title=""
                                         data-original-title="Resmi değiştir">
                                         <i class="ki ki-plus text-muted"></i>
-                                        <input type="file" name="file3" accept=".png, .jpg, .jpeg"/>
+                                        <input type="file" id="file3" name="file3" accept=".png, .jpg, .jpeg"/>
 
                                     </label>
 
@@ -201,9 +193,49 @@
         let avatar6 = new KTImageInput('kt_image_6');
 
         CKEDITOR.replace('contents', {
-            height: 450,
+            height: 250,
             filebrowserBrowseUrl: '{{ asset('assets/admin/js/ckeditor/ckfinder/ckfinder.html') }}',
             filebrowserUploadUrl: '{{ asset('assets/admin/js/ckeditor/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files') }}'
         });
+
+        (function () {
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $('#create_form').submit(function (e) {
+                e.preventDefault();
+                let parentId=0;
+                let data=new FormData(this);
+                data.append('id',parentId)
+                $.ajax({
+                    method: 'POST',
+                    url: $('#create_form').attr('action'),
+                    enctype: 'multipart/form-data',
+                    data: data,
+                    dataType:'JSON',
+                    processData: false,  // tell jQuery not to process the data
+                    contentType: false
+                }).done(function (response) {
+                    console.log(response);
+                    /*let imageUrl='{{asset('assets/admin/media/svg/icons/Files/image_back.png')}}'
+                    Swal.fire({
+                        title:'Ok',
+                        text:response.message,
+                        icon:'success',
+                        timer:2500
+                    })
+                    $('#file').val('');
+                    $('#file2').val('');
+                    $('#file3').val('');
+                    $('.image-input-wrapper').css('background-image','url(' + imageUrl + ')');
+                    $('#create_form')[0].reset();*/
+                }).fail(function (error) {
+                    console.log(error);
+                })
+            })
+        })();
     </script>
 @endsection

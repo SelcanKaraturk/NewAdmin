@@ -27,6 +27,7 @@ Route::prefix('admin')->name('admin.')->group(function (){
     Route::resources([
         'control' => DashboardController::class,
     ]);
+    Route::get('control/subcategory/{id}',[DashboardController::class,'subcategory'])->name('control.subcategory');
 });
 
 

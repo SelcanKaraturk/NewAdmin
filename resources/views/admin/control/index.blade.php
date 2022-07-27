@@ -60,7 +60,8 @@
                         <div class="col-lg-3 col-xl-4 mt-5 mt-lg-0">
 
                             <!--begin::Button-->
-                            <a href="{{route('admin.control.create')}}" id="new-record" class="btn btn-primary font-weight-bolder">
+                            <a href="{{route('admin.control.create')}}" id="new-record"
+                               class="btn btn-primary font-weight-bolder">
 											<span class="svg-icon svg-icon-md">
 												<!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg-->
 												<svg xmlns="http://www.w3.org/2000/svg"
@@ -94,24 +95,34 @@
                         <th title="Field #4">Dil</th>
                         <th title="Field #5">Kategori Türü</th>
                         <th title="Field #6">Eklenme Tarihi</th>
-                        <th title="Field #7">Aksiyonlar</th>
+                        <th title="Field #7">Aktif/Pasif</th>
+                        <th title="Field #8">Aksiyonlar</th>
 
                     </tr>
                     </thead>
                     <tbody>
                     @foreach($data as $item)
                         <tr>
-
                             <td>{{$item->sorted}}</td>
                             <td>{{$item->category_language->name}}</td>
                             <td>{{$item->id}}</td>
                             <td>{{Str::upper($item->category_language->language_slug)}}</td>
                             <td>$22672.60</td>
                             <td>{{date('d/m/Y', strtotime($item->created_at))}}</td>
+                            <td>
+                                <span class="switch switch-md switch-outline switch-icon switch-success">
+                                        <label>
+                                            <input type="checkbox" id="status{{$item->id}}"
+                                                   onchange="changeStatus({{$item->id}})"
+                                                   {{$item->status==='1'?'checked':''}}  name="status"/>
+                                            <span></span>
+                                        </label>
+                                    </span>
+                            </td>
                             <td class="datatable-cell">
                                 <span>
-                                    <a href="javascript:void(0)" class="btn btn-sm btn-clean btn-icon"
-                                       title="Delete">
+                                    <a href="javascript:void(0)" class="btn btn-sm btn-clean btn-icon edit-btn"
+                                       title="Düzenle" onclick=" edit({{$item->id}})">
                                    <span class="svg-icon svg-icon-warning svg-icon-2x"><!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\themes\metronic\theme\html\demo1\dist/../src/media/svg/icons\Design\Edit.svg--><svg
                                            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                            width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -125,8 +136,11 @@
     </g>
 </svg><!--end::Svg Icon--></span>
                                 </a>
-                                    <a href="javascript:void(0)" class="btn btn-sm btn-clean btn-icon"
-                                       title="Delete">
+                                    <a href="javascript:void(0)" onclick="var result=confirm('Silmek istediğinizden emin misiniz?');
+                                        if(result){
+                                        deleteCategory({{$item->id}})
+                                        } " class="btn btn-sm btn-clean btn-icon"
+                                       title="Sil">
                                     <span class="svg-icon svg-icon-danger svg-icon-md">
 	                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                          width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -141,6 +155,17 @@
 	                                    </g>
 	                                </svg>
 	                            </span>
+                                </a>
+                                    <a href="{{route('admin.control.subcategory',$item->id)}}" class="btn btn-sm btn-icon"
+                                       title="Alt İçerikler">
+                                    <span class="svg-icon svg-icon-primary svg-icon-2x"><!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\themes\metronic\theme\html\demo1\dist/../src/media/svg/icons\Design\Substract.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                    <rect x="0" y="0" width="24" height="24"/>
+                                    <path d="M6,9 L6,15 C6,16.6568542 7.34314575,18 9,18 L15,18 L15,18.8181818 C15,20.2324881 14.2324881,21 12.8181818,21 L5.18181818,21 C3.76751186,21 3,20.2324881 3,18.8181818 L3,11.1818182 C3,9.76751186 3.76751186,9 5.18181818,9 L6,9 Z" fill="#000000" fill-rule="nonzero"/>
+                                    <path d="M10.1818182,4 L17.8181818,4 C19.2324881,4 20,4.76751186 20,6.18181818 L20,13.8181818 C20,15.2324881 19.2324881,16 17.8181818,16 L10.1818182,16 C8.76751186,16 8,15.2324881 8,13.8181818 L8,6.18181818 C8,4.76751186 8.76751186,4 10.1818182,4 Z" fill="#000000" opacity="0.3"/>
+                                    </g>
+                                    </svg><!--end::Svg Icon-->
+                                    </span>
                                 </a>
                                 </span>
                             </td>
@@ -157,7 +182,7 @@
     </div>
 
     <!-- Modal New Record -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="editmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-xl modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
@@ -167,63 +192,166 @@
                     </button>
                 </div>
                 <div class="modal-body">
-
-                    <form class="form">
+                    <form class="form" id="edit_form" enctype="multipart/form-data" method="post"
+                          action="">
+                        @csrf
+                        @method('PUT')
                         <div class="card-body">
                             <div class="form-group">
                                 <label>Başlık</label>
-                                <input type="email" class="form-control form-control-solid"
-                                       placeholder="Enter full name"/>
+                                <input type="text" name="name" id="name" class="form-control form-control-solid"
+                                       placeholder="sayfa başlığı"/>
                                 <span class="form-text text-muted"></span>
                             </div>
                             <div class="form-group row">
                                 <div class="col-lg-6">
-                                    <label>Deneme</label>
-                                    <input type="email" class="form-control form-control-solid"
-                                           placeholder="Enter email"/>
+                                    <label>Sıra</label>
+                                    <input type="number" name="sorted" value="999"
+                                           class="form-control form-control-solid"/>
                                     <span class="form-text text-muted"></span>
                                 </div>
                                 <div class="col-lg-6">
-                                    <label>Select</label>
-                                    <select class="form-control form-control-solid">
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
+                                    <label>Template</label>
+                                    <select class="form-control form-control-solid" name="block_id">
+                                        <option value="">Seçiniz</option>
+                                        <option value="1">Sayfa</option>
+                                        <option value="2">İletişim</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <div class="col-lg-1">
-                                    <label>Durumu</label>
-                                    <span class="switch switch-outline switch-icon switch-success">
-                                        <label>
-                                            <input type="checkbox" checked="checked" name="select"/>
-                                            <span></span>
-                                        </label>
-                                    </span>
 
-                                </div>
-                                <div class="col-lg-11">
-                                    <label>Deneme</label>
-                                    <input type="email" class="form-control form-control-solid"
-                                           placeholder="Enter email"/>
+                                <div class="col-lg-12">
+                                    <label>Url</label>
+                                    <input type="text" name="url" class="form-control form-control-solid"
+                                           placeholder="harici url"/>
                                     <span class="form-text text-muted"></span>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label>Başlık</label>
-                                <textarea class="form-control form-control-solid" name="" id="" cols="30" rows="3"></textarea>
+                                <label>Özet</label>
+                                <textarea class="form-control form-control-solid" name="description" id="" cols="30"
+                                          rows="3"></textarea>
                                 <span class="form-text text-muted"></span>
                             </div>
                             <div class="form-group">
                                 <label>İçerik</label>
-                                <textarea name="contents" class="form-control form-control-solid" id="contents"></textarea>
+                                <textarea name="contents" class="form-control form-control-solid"
+                                          id="contents"></textarea>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-lg-12 py-5"><label>Resim Yükle</label></div>
+
+                                <div class="col-lg-4">
+                                    <div class="image-input image-input-outline" id="kt_image_4"
+                                         style="">
+                                        <div class="image-input-wrapper"
+                                             style="background-image: url({{asset('assets/admin/media/svg/icons/Files/image_back.png')}})"></div>
+                                        <label
+                                            class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                                            data-action="change" data-toggle="tooltip" title=""
+                                            data-original-title="Resmi değiştir">
+                                            <i class="ki ki-plus text-muted"></i>
+                                            <input type="file" id="file" name="file" value=""/>
+
+                                        </label>
+
+                                        <span
+                                            class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                                            data-action="cancel" data-toggle="tooltip" title="Cancel avatar">
+  <i class="ki ki-bold-close icon-xs text-muted"></i>
+ </span>
+
+                                        <span
+                                            class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                                            data-action="remove" data-toggle="tooltip" title="Resmi sil">
+  <i class="ki ki-bold-close icon-xs text-muted"></i>
+ </span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="image-input image-input-outline" id="kt_image_5"
+                                         style="">
+                                        <div class="image-input-wrapper"
+                                             style="background-image: url({{asset('assets/admin/media/svg/icons/Files/image_back.png')}})"></div>
+                                        <label
+                                            class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                                            data-action="change" data-toggle="tooltip" title=""
+                                            data-original-title="Resmi değiştir">
+                                            <i class="ki ki-plus text-muted"></i>
+                                            <input type="file" id="file2" name="file2" accept=".png, .jpg, .jpeg" value=""/>
+
+                                        </label>
+
+                                        <span
+                                            class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                                            data-action="cancel" data-toggle="tooltip" title="Cancel avatar">
+                                            <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                        </span>
+
+                                        <span
+                                            class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                                            data-action="remove" data-toggle="tooltip" title="Resmi sil">
+                                            <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="image-input image-input-outline" id="kt_image_6"
+                                         style="">
+                                        <div class="image-input-wrapper"
+                                             style="background-image: url({{asset('assets/admin/media/svg/icons/Files/image_back.png')}})"></div>
+                                        <label
+                                            class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                                            data-action="change" data-toggle="tooltip" title=""
+                                            data-original-title="Resmi değiştir">
+                                            <i class="ki ki-plus text-muted"></i>
+                                            <input type="file" id="file3" name="file3" accept=".png, .jpg, .jpeg" value=""/>
+
+                                        </label>
+
+                                        <span
+                                            class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                                            data-action="cancel" data-toggle="tooltip" title="Cancel avatar">
+                                            <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                        </span>
+
+                                        <span
+                                            class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                                            data-action="remove" data-toggle="tooltip" title="Resmi sil">
+                                            <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <h2 class="py-5">Seo Ayarları</h2>
+                            <div class="form-group">
+                                <label>Seo Link</label>
+                                <input type="text" name="seo_link" class="form-control form-control-solid"
+                                       placeholder="seo link"/>
+                                <span class="form-text text-muted"></span>
+                            </div>
+                            <div class="form-group">
+                                <label>Seo Başlık</label>
+                                <input type="text" name="seo_title" class="form-control form-control-solid"
+                                       placeholder="seo başlık"/>
+                                <span class="form-text text-muted"></span>
+                            </div>
+                            <div class="form-group">
+                                <label>Seo Açıklama</label>
+                                <textarea class="form-control form-control-solid" name="seo_description" id="" cols="30"
+                                          rows="3"></textarea>
+                                <span class="form-text text-muted"></span>
+                            </div>
+                            <div class="form-group">
+                                <label>Seo Anahtar Kelime</label>
+                                <input type="text" name="seo_keywords" class="form-control form-control-solid"
+                                       placeholder="seo anahtar kelime"/>
+                                <span class="form-text text-muted"></span>
                             </div>
                         </div>
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                            <button type="submit" class="btn btn-success mr-2">Submit</button>
                         </div>
                     </form>
                 </div>
@@ -235,5 +363,126 @@
 @section('script')
     <!--begin::Page Scripts(used by this page)-->
     <script src="{{asset('assets/admin/js/html-table.js')}}"></script>
+    <!--begin::Page Scripts(used by this page)-->
+    <script src="{{asset('assets/admin/js/ckeditor/ckeditor.js')}}"></script>
+    <!--end::Page Scripts-->
+    <script>
+
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $('#edit_form').submit(function(e){
+            e.preventDefault();
+            let file= $('#file').attr('value');
+            let file2= $('#file2').attr('value');
+            let file3= $('#file3').attr('value');
+            let contents=CKEDITOR.instances['contents'].getData();
+            //CKEDITOR.instances['contents'].setData(contents);
+            const data= new FormData(this);
+            data.append("file", file);
+            data.append("file2", file2);
+            data.append("file3", file3);
+            data.append("contents", contents);
+            $.ajax({
+                method: 'POST',
+                url: $('#edit_form').attr('action'),
+                enctype: 'multipart/form-data',
+                data: data,
+                dataType:'JSON',
+                processData: false,  // tell jQuery not to process the data
+                contentType: false
+            }).done(function (response) {
+                $('#editmodal').modal('hide');
+                Swal.fire({
+                    title:'Ok',
+                    text:response.message,
+                    icon:'success',
+                    timer:2500
+                })
+            }).fail(function (error) {
+                console.log(error);
+            })
+        })
+
+        function deleteCategory(id){
+            console.log(id);
+            $.ajax({
+                method:'DELETE',
+                url:"{{route('admin.control.destroy',1)}}",
+                data:{id:id}
+            }).done(function (response){
+
+                Swal.fire({
+                    title:'Ok',
+                    text:response.message,
+                    icon:'success',
+                    timer:2500
+                })
+                setTimeout(window.location.reload(),6000);
+            }).fail(function (err){
+                console.log(err)
+            })
+        }
+
+        function changeStatus(id) {
+            let status;
+            if ($('#status' + id).is(':checked')) {
+                status = 1;
+            } else {
+                status = 0;
+            }
+            $.ajax({
+                type: 'get',
+                url: '{{route('admin.control.show',1)}}',
+                data: {id: id, status: status}
+            }).done(function (response) {
+                console.log(response)
+            }).fail(function (error) {
+                console.log(error)
+            })
+
+        }
+
+        function edit(id) {
+            $.ajax({
+                type: 'GET',
+                url: '{{route('admin.control.edit',1)}}',
+                data: {id: id}
+            }).done(function (response) {
+                $("input[name='name']").val(response.data.category_language.name);
+                $("input[name='seo_title']").val(response.data.category_language.seo_title);
+                $("input[name='seo_description']").val(response.data.category_language.seo_description);
+                $("input[name='seo_keywords']").val(response.data.category_language.seo_keywords);
+                $("input[name='sorted']").val(response.data.sorted);
+                $("input[name='url']").val(response.data.category_language.url);
+                $("textarea[name='description']").val(response.data.category_language.description);
+                CKEDITOR.instances['contents'].setData(response.data.category_language.contents);
+                $('#file').parent().parent().find("div").css('background-image', 'url(' + response.data.file + ')');
+                $('#file2').parent().parent().find("div").css('background-image', 'url(' + response.data.file2 + ')');
+                $('#file3').parent().parent().find("div").css('background-image', 'url(' + response.data.file3 + ')');
+                $('#edit_form').attr('action',window.location.href+'/control/'+id);
+                $('#file').attr('value',response.data.file);
+                $('#file2').attr('value',response.data.file2);
+                $('#file3').attr('value',response.data.file3);
+            }).fail(function (err) {
+                console.log(err);
+            })
+            $('#editmodal').modal('show');
+
+        }
+
+        let avatar4 = new KTImageInput('kt_image_4');
+        let avatar5 = new KTImageInput('kt_image_5');
+        let avatar6 = new KTImageInput('kt_image_6');
+
+        CKEDITOR.replace('contents', {
+            height: 250,
+            filebrowserBrowseUrl: '{{ asset('assets/admin/js/ckeditor/ckfinder/ckfinder.html') }}',
+            filebrowserUploadUrl: '{{ asset('assets/admin/js/ckeditor/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files') }}'
+        });
+    </script>
 
 @endsection

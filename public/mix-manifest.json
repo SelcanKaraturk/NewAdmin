@@ -895,6 +895,7 @@
     "/assets/admin/media/svg/icons/Files/Folder-thunder.svg": "/assets/admin/media/svg/icons/Files/Folder-thunder.svg?id=cb24f7053f06d3a11258ec3617c0cb40",
     "/assets/admin/media/svg/icons/Files/Folder.svg": "/assets/admin/media/svg/icons/Files/Folder.svg?id=7aa2320a381e48421f36f4c6a54ebd59",
     "/assets/admin/media/svg/icons/Files/Group-folders.svg": "/assets/admin/media/svg/icons/Files/Group-folders.svg?id=bcfb43bcff17e199a633a86157edbf23",
+    "/assets/admin/media/svg/icons/Files/image_back.png": "/assets/admin/media/svg/icons/Files/image_back.png?id=f358940661340a042302243abbdb201f",
     "/assets/admin/media/svg/icons/Files/Import.svg": "/assets/admin/media/svg/icons/Files/Import.svg?id=d3e1a7c2e318f923d9696f57889f8891",
     "/assets/admin/media/svg/icons/Files/Locked-folder.svg": "/assets/admin/media/svg/icons/Files/Locked-folder.svg?id=adc3e108d6913233283987e5be452794",
     "/assets/admin/media/svg/icons/Files/Media-folder.svg": "/assets/admin/media/svg/icons/Files/Media-folder.svg?id=b8568d0bc46c48f67655c1b101164f7e",
@@ -2485,7 +2486,7 @@
     "/assets/admin/js/ckeditor/ckfinder/skins/neko/skin.js": "/assets/admin/js/ckeditor/ckfinder/skins/neko/skin.js?id=3abfcd02fbd21bbe42ae8f92c447cdca",
     "/assets/admin/js/ckeditor/ckfinder/userfiles/files/a0132293261_16(1).jpg": "/assets/admin/js/ckeditor/ckfinder/userfiles/files/a0132293261_16(1).jpg?id=121991e7e6756aebbf274221fb9f60a3",
     "/assets/admin/js/ckeditor/ckfinder/userfiles/files/a0132293261_16.jpg": "/assets/admin/js/ckeditor/ckfinder/userfiles/files/a0132293261_16.jpg?id=121991e7e6756aebbf274221fb9f60a3",
-    "/assets/admin/js/ckeditor/config.js": "/assets/admin/js/ckeditor/config.js?id=10237c750ad0e49e783f0d431b31c2b9",
+    "/assets/admin/js/ckeditor/config.js": "/assets/admin/js/ckeditor/config.js?id=4921573d60ff76d9ab10c83d1fd33ddb",
     "/assets/admin/js/ckeditor/contents.css": "/assets/admin/js/ckeditor/contents.css?id=6884e4f2c966bfb0681758734088e69a",
     "/assets/admin/js/ckeditor/lang/af.js": "/assets/admin/js/ckeditor/lang/af.js?id=bae2bf67cea512d6ba5d9d06cf41ea5b",
     "/assets/admin/js/ckeditor/lang/ar.js": "/assets/admin/js/ckeditor/lang/ar.js?id=42f73d12272c2820f7ca47ee8de6e66f",
@@ -2958,6 +2959,6 @@
     "/assets/admin/js/ckeditor/skins/moono-lisa/images/spinner.gif": "/assets/admin/js/ckeditor/skins/moono-lisa/images/spinner.gif?id=884028ce64c617d37a23d68fa8224948",
     "/assets/admin/js/ckeditor/skins/moono-lisa/readme.md": "/assets/admin/js/ckeditor/skins/moono-lisa/readme.md?id=95f7a40c148d39be4e8b9538677c2c4d",
     "/assets/admin/js/ckeditor/styles.js": "/assets/admin/js/ckeditor/styles.js?id=be7da1f018c56ff87e07e04b8503cfbe",
-    "/assets/admin/js/admin.js": "/assets/admin/js/admin.js?id=0f19db42f3aab27afd83ed0bd264b0f4",
-    "/assets/admin/css/admin.css": "/assets/admin/css/admin.css?id=4f631d9b8e34e98f97e55e5c73124e3b"
+    "/assets/admin/js/admin.js": "/assets/admin/js/admin.js?id=8a5952e28fc1bda1cbc46f50699a07c3",
+    "/assets/admin/css/admin.css": "/assets/admin/css/admin.css?id=43e6774fb2cf024df89c2f1518441cc8"
 }

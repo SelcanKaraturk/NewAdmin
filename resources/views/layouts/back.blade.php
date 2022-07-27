@@ -8,8 +8,10 @@
     <title>Metronic Live preview | Keenthemes</title>
     <meta name="description" content="Metronic admin dashboard live demo. Check out all the features of the admin panel. A large number of settings, additional services and widgets." />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <link rel="canonical" href="https://keenthemes.com/metronic" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="canonical" href="" />
     <!--begin::Fonts-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.23/sweetalert2.min.js" integrity="sha512-eJK7xM/jkT80Ixs4NJuFhaqb/DfpGFP9j/GkZGzlQyn6nZmJPSXkWsLvRTcR4HBBe7bUlqwyWFpb0pJ44GyP/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!--end::Fonts-->
