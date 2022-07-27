@@ -43,7 +43,14 @@ class DashboardController extends Controller
      */
     public function create()
     {
+
         return view('admin.control.create');
+    }
+    public function created($id=0)
+    {
+
+        $subId=$id;
+        return view('admin.control.create',compact('subId'));
     }
 
     /**
@@ -54,12 +61,12 @@ class DashboardController extends Controller
      */
     public function store(Request $request)
     {
-        return response()->json([
+        /*return response()->json([
             'message' => $request->all()
-        ]);
+        ]);*/
         //dd($request->all());
         $data = $request->only(['sorted', 'block_id']);
-        $data['parent_id'] = 0;
+        $data['parent_id'] = $request->get('id');
         $data_category = $request->except(['sorted', 'block_id', '_token', 'seo_link']);
         //dd($data_category);
         if (count($request->allFiles()) > 0) {
@@ -186,5 +193,12 @@ class DashboardController extends Controller
         }])->get();
 
         return view('admin.control.index', compact('data', 'slug'));
+    }
+    public function back($id)
+    {
+        $category=Category::find($id);
+        $parent=$category->parent_id;
+
+        return redirect()->route('admin.control.subcategory',$parent);
     }
 }

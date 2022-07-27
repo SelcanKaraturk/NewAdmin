@@ -7,10 +7,14 @@
 @section('content')
     <div class="container">
         <!--begin::Card-->
-
+{{$subId}}
         <div class="card card-custom">
             <div class="card-header flex-wrap border-0 pt-6 pb-0">
-                <div class="card-body pb-0"><h3>Yeni Kayıt</h3></div>
+
+                <div class="card-body d-flex justify-content-between pb-0">
+                    <h3>Yeni Kayıt</h3>
+                    <a href="{{url()->previous()}}" class="btn btn-success mr-2">Geri Dön</a>
+                </div>
             </div>
             <div class="card-body">
                 <form class="form" id="create_form" enctype="multipart/form-data" method="POST"
@@ -169,7 +173,7 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-success mr-2">Submit</button>
+                        <button type="submit" class="btn btn-success mr-2">Kaydet</button>
                     </div>
                 </form>
 
@@ -207,7 +211,7 @@
             });
             $('#create_form').submit(function (e) {
                 e.preventDefault();
-                let parentId=0;
+                let parentId="{{$subId}}";
                 let data=new FormData(this);
                 data.append('id',parentId)
                 $.ajax({
@@ -219,8 +223,8 @@
                     processData: false,  // tell jQuery not to process the data
                     contentType: false
                 }).done(function (response) {
-                    console.log(response);
-                    /*let imageUrl='{{asset('assets/admin/media/svg/icons/Files/image_back.png')}}'
+                    //console.log(response);
+                    let imageUrl='{{asset('assets/admin/media/svg/icons/Files/image_back.png')}}'
                     Swal.fire({
                         title:'Ok',
                         text:response.message,
@@ -231,7 +235,7 @@
                     $('#file2').val('');
                     $('#file3').val('');
                     $('.image-input-wrapper').css('background-image','url(' + imageUrl + ')');
-                    $('#create_form')[0].reset();*/
+                    $('#create_form')[0].reset();
                 }).fail(function (error) {
                     console.log(error);
                 })

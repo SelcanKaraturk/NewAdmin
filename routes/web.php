@@ -24,10 +24,10 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::prefix('admin')->name('admin.')->group(function (){
     Route::get('',[DashboardController::class,'index']);
-    Route::resources([
-        'control' => DashboardController::class,
-    ]);
+    Route::resource('control', DashboardController::class)->except('create');
     Route::get('control/subcategory/{id}',[DashboardController::class,'subcategory'])->name('control.subcategory');
+    Route::get('control/create/category/{id?}',[DashboardController::class,'created'])->name('control.created');
+    Route::get('control/back/{id}',[DashboardController::class,'back'])->name('control.back');
 });
 
 
