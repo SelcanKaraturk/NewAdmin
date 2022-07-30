@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Language;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Lang;
 
 class LanguageController extends Controller
 {
@@ -15,7 +16,8 @@ class LanguageController extends Controller
      */
     public function index()
     {
-        //
+        $data = Language::with('settings')->get();
+        return view('admin.languages.index', compact('data'));
     }
 
     /**
@@ -31,7 +33,7 @@ class LanguageController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -42,41 +44,70 @@ class LanguageController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Language  $language
      * @return \Illuminate\Http\Response
      */
-    public function show(Language $language)
+    public function show(Request $request, $language)
     {
-        //
+        $langId = Language::with('settings')->find($request->get('id'));
+        $lang = Language::with('settings')->where('id', '!=', $langId->id)->get();
+        $langId->settings()->update(['default_lang' => '1']);
+
+        foreach ($lang as $item) {
+            $item->settings()->update(['default_lang' => '0']);
+        }
+
+        return response()->json([
+            'message' => 'Sitenizin varsayılan dili ' . $langId->name . ' yapılmıştır.'
+        ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Language  $language
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function edit(Language $language)
+    public function edit(Request $request, $language)
     {
-        //
+        $lang = Language::with('settings')->find($request->get('id'));
+
+        return response()->json([
+            'data' => $lang
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Language  $language
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Language $language)
+    public function update(Request $request, $id)
     {
-        //
+        $lang = Language::find($id);
+        $data = $request->only(['name', 'slug']);
+        if ($request->hasFile('file')){
+            $file=$request->file('file');
+            $fileName = time() . \Str::random(5) . '.' . $file->extension();
+            $path = '/uploads/' . $file->storeAs('flag', $fileName);
+            $data['img']=$path;
+        }
+        if (!$request->hasFile('file') and $request->get("file") !== 'undefined') {
+            $data['img'] = $request->get('file');
+        }
+
+        $lang->update($data);
+
+        return response()->json([
+            'message' => 'Kayıt başarıyla tamamlandı',
+            'img' => $lang->img
+        ]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Language  $language
+     * @param \App\Models\Language $language
      * @return \Illuminate\Http\Response
      */
     public function destroy(Language $language)

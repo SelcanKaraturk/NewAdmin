@@ -31912,8 +31912,8 @@ body.swal2-toast-shown .swal2-container.swal2-bottom-end, body.swal2-toast-shown
     font-style: normal;
     font-weight: 900;
     font-display: block;
-    src: url(fonts/@fortawesome/fa-solid-900.eot);
-    src: url(fonts/@fortawesome/fa-solid-900.eot?#iefix) format("embedded-opentype"), url(fonts/@fortawesome/fa-solid-900.woff2) format("woff2"), url(fonts/@fortawesome/fa-solid-900.woff) format("woff"), url(fonts/@fortawesome/fa-solid-900.ttf) format("truetype"), url(fonts/@fortawesome/fa-solid-900.svg#fontawesome) format("svg")
+    src: url(../plugins/global/fonts/@fortawesome/fa-solid-900.eot);
+    src: url(../plugins/global/fonts/@fortawesome/fa-solid-900.eot?#iefix) format("embedded-opentype"), url(../plugins/global/fonts/@fortawesome/fa-solid-900.woff2) format("woff2"), url(../plugins/global/fonts/@fortawesome/fa-solid-900.woff) format("woff"), url(../plugins/global/fonts/@fortawesome/fa-solid-900.ttf) format("truetype"), url(../plugins/global/fonts/@fortawesome/fa-solid-900.svg#fontawesome) format("svg")
 }
 
 .fa, .far, .fas {

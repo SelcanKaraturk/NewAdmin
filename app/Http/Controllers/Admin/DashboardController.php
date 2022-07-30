@@ -12,12 +12,14 @@ use Psy\Util\Str;
 
 class DashboardController extends Controller
 {
+    public $slug;
     public function __construct()
     {
         if (empty(session('lang_slug'))) {
             $settings = Setting::where('default_lang', '1')->with('lang')->first();
             session(['lang_slug' => $settings->lang->slug]);
         }
+        $this->slug=session('lang_slug');
     }
 
     /**
@@ -27,8 +29,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $slug = session('lang_slug');
-
+        $slug=$this->slug;
         $data = Category::where('parent_id', 0)->with(['category_language' => function ($query) use ($slug) {
             $query->where('language_slug', $slug);
         }])->get();
@@ -118,7 +119,7 @@ class DashboardController extends Controller
      */
     public function edit(Request $request, $id)
     {
-        $slug = session('lang_slug');
+        $slug = $this->slug;
         $data = Category::with(['category_language' => function ($query) use ($slug) {
             $query->where('language_slug', $slug);
         }])->find($request->get('id'));
@@ -137,7 +138,6 @@ class DashboardController extends Controller
     public function update(Request $request, $id)
     {
 
-        $slug = session('lang_slug');
         $category = Category::find($id);
 
         $data = $request->only(['sorted', 'block_id']);
@@ -159,7 +159,7 @@ class DashboardController extends Controller
             }
         }
         $category->update($data);
-        $category->category_language()->where('language_slug',$slug)->update($data_category);
+        $category->category_language()->where('language_slug',$this->slug)->update($data_category);
 
 
         return response()->json([
