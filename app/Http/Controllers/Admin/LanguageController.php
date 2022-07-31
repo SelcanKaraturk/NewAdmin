@@ -27,7 +27,7 @@ class LanguageController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.languages.create');
     }
 
     /**
@@ -38,7 +38,20 @@ class LanguageController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data=$request->except('_token');
+
+        if($request->hasFile('img')){
+            $file=$request->file('img');
+            $fileName = time() . \Str::random(5) . '.' . $file->extension();
+            $path = '/uploads/' . $file->storeAs('flag', $fileName);
+            $data['img']=$path;
+        }
+        $create=Language::create($data);
+        $create->settings()->create();
+        return response()->json([
+            'message'=>'Dil başarıyla eklendi'
+        ]);
+        //ADD SOME CODE FOR SYNCHRONIZATION
     }
 
     /**
@@ -107,11 +120,17 @@ class LanguageController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\Language $language
+
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Language $language)
+    public function destroy(Request $request,$language)
     {
-        //
+        $language = Language::find($request->get('id'));
+        $language->settings()->delete();
+        $language->delete();
+        return response()->json([
+            'message'=>'Dil Başarıyla Silindi',
+
+        ]);
     }
 }

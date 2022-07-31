@@ -60,8 +60,8 @@
                         <div class="col-lg-3 col-xl-4 mt-5 mt-lg-0 text-right">
 
                             <!--begin::Button-->
-                            @php($id=\Request()->segment(4))
-                            <a href="{{isset($id)? route('admin.control.created',$id) : route('admin.control.created')}}"
+
+                            <a href="{{route('admin.lang.create')}}"
                                id="new-record"
                                class="btn btn-primary font-weight-bolder">
 											<span class="svg-icon svg-icon-md">
@@ -80,30 +80,6 @@
                                                 <!--end::Svg Icon-->
 											</span>Yeni Ekle</a>
                             <!--end::Button-->
-                            @if($id)
-                                <a href="{{route('admin.control.back',$id)}}"
-                                   id="back"
-                                   class="btn btn-primary font-weight-bolder">
-								<span class="svg-icon svg-icon-white svg-icon-md"><!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\themes\metronic\theme\html\demo1\dist/../src/media/svg/icons\Media\Backward.svg--><svg
-                                        xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                        width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                <rect x="0" y="0" width="24" height="24"/>
-                                <path
-                                    d="M11.0879549,18.2771971 L17.8286578,12.3976203 C18.0367595,12.2161036 18.0583109,11.9002555 17.8767943,11.6921539 C17.8622027,11.6754252 17.8465132,11.6596867 17.8298301,11.6450431 L11.0891271,5.72838979 C10.8815919,5.54622572 10.5656782,5.56679309 10.3835141,5.7743283 C10.3034433,5.86555116 10.2592899,5.98278612 10.2592899,6.10416552 L10.2592899,17.9003957 C10.2592899,18.1765381 10.4831475,18.4003957 10.7592899,18.4003957 C10.8801329,18.4003957 10.9968872,18.3566309 11.0879549,18.2771971 Z"
-                                    fill="#000000" opacity="0.3"
-                                    transform="translate(14.129645, 12.002277) scale(-1, 1) translate(-14.129645, -12.002277) "/>
-                                <path
-                                    d="M5.08795487,18.2771971 L11.8286578,12.3976203 C12.0367595,12.2161036 12.0583109,11.9002555 11.8767943,11.6921539 C11.8622027,11.6754252 11.8465132,11.6596867 11.8298301,11.6450431 L5.08912711,5.72838979 C4.8815919,5.54622572 4.56567821,5.56679309 4.38351414,5.7743283 C4.30344325,5.86555116 4.25928988,5.98278612 4.25928988,6.10416552 L4.25928988,17.9003957 C4.25928988,18.1765381 4.48314751,18.4003957 4.75928988,18.4003957 C4.88013293,18.4003957 4.99688719,18.3566309 5.08795487,18.2771971 Z"
-                                    fill="#000000"
-                                    transform="translate(8.129645, 12.002277) scale(-1, 1) translate(-8.129645, -12.002277) "/>
-                                </g>
-                                </svg><!--end::Svg Icon-->
-                                </span>
-                                    Geri
-                                </a>
-                                <!--end::Button-->
-                            @endif
 
                         </div>
 
@@ -160,7 +136,7 @@
                                     <a href="javascript:void(0)"
                                        onclick="var result=confirm('Silmek istediğinizden emin misiniz?');
                                            if(result){
-                                           deleteCategory()
+                                           deleteLang({{$item->id}})
                                            } " class="btn btn-sm btn-clean btn-icon"
                                        title="Sil">
                                     <span class="svg-icon svg-icon-danger svg-icon-md">
@@ -178,25 +154,7 @@
 	                                </svg>
 	                            </span>
                                 </a>
-                                    <a href="{{route('admin.control.subcategory',$item->id)}}"
-                                       class="btn btn-sm btn-icon"
-                                       title="Alt İçerikler">
-                                    <span class="svg-icon svg-icon-primary svg-icon-2x"><!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\themes\metronic\theme\html\demo1\dist/../src/media/svg/icons\Design\Substract.svg--><svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
-                                            viewBox="0 0 24 24" version="1.1">
-                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                    <rect x="0" y="0" width="24" height="24"/>
-                                    <path
-                                        d="M6,9 L6,15 C6,16.6568542 7.34314575,18 9,18 L15,18 L15,18.8181818 C15,20.2324881 14.2324881,21 12.8181818,21 L5.18181818,21 C3.76751186,21 3,20.2324881 3,18.8181818 L3,11.1818182 C3,9.76751186 3.76751186,9 5.18181818,9 L6,9 Z"
-                                        fill="#000000" fill-rule="nonzero"/>
-                                    <path
-                                        d="M10.1818182,4 L17.8181818,4 C19.2324881,4 20,4.76751186 20,6.18181818 L20,13.8181818 C20,15.2324881 19.2324881,16 17.8181818,16 L10.1818182,16 C8.76751186,16 8,15.2324881 8,13.8181818 L8,6.18181818 C8,4.76751186 8.76751186,4 10.1818182,4 Z"
-                                        fill="#000000" opacity="0.3"/>
-                                    </g>
-                                    </svg><!--end::Svg Icon-->
-                                    </span>
-                                </a>
+
                                 </span>
                             </td>
 
@@ -330,14 +288,12 @@
             })
         })
 
-        function deleteCategory(id) {
-            console.log(id);
+        function deleteLang(id) {
             $.ajax({
                 method: 'DELETE',
-                url: "{{route('admin.control.destroy',1)}}",
+                url: "{{route('admin.lang.destroy',1)}}",
                 data: {id: id}
             }).done(function (response) {
-
                 Swal.fire({
                     title: 'Ok',
                     text: response.message,
