@@ -286,7 +286,7 @@
             }).fail(function (error) {
                 console.log(error);
             })
-        })
+        });
 
         function deleteLang(id) {
             $.ajax({

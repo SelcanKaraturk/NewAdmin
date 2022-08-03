@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\LanguageResource;
 use App\Models\Language;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Lang;
@@ -38,18 +39,18 @@ class LanguageController extends Controller
      */
     public function store(Request $request)
     {
-        $data=$request->except('_token');
+        $data = $request->except('_token');
 
-        if($request->hasFile('img')){
-            $file=$request->file('img');
+        if ($request->hasFile('img')) {
+            $file = $request->file('img');
             $fileName = time() . \Str::random(5) . '.' . $file->extension();
             $path = '/uploads/' . $file->storeAs('flag', $fileName);
-            $data['img']=$path;
+            $data['img'] = $path;
         }
-        $create=Language::create($data);
+        $create = Language::create($data);
         $create->settings()->create();
         return response()->json([
-            'message'=>'Dil başarıyla eklendi'
+            'message' => 'Dil başarıyla eklendi'
         ]);
         //ADD SOME CODE FOR SYNCHRONIZATION
     }
@@ -99,11 +100,11 @@ class LanguageController extends Controller
     {
         $lang = Language::find($id);
         $data = $request->only(['name', 'slug']);
-        if ($request->hasFile('file')){
-            $file=$request->file('file');
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
             $fileName = time() . \Str::random(5) . '.' . $file->extension();
             $path = '/uploads/' . $file->storeAs('flag', $fileName);
-            $data['img']=$path;
+            $data['img'] = $path;
         }
         if (!$request->hasFile('file') and $request->get("file") !== 'undefined') {
             $data['img'] = $request->get('file');
@@ -120,17 +121,51 @@ class LanguageController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request,$language)
+    public function destroy(Request $request, $language)
     {
         $language = Language::find($request->get('id'));
         $language->settings()->delete();
         $language->delete();
         return response()->json([
-            'message'=>'Dil Başarıyla Silindi',
+            'message' => 'Dil Başarıyla Silindi',
 
         ]);
+    }
+
+    public function value()
+    {
+        $lang = Language::all();
+        //dd($lang->first()->language_value->konum);
+        $collection = collect($lang->first()->language_value);
+
+        $lang_keys = $collection->keys();
+
+        return view('admin.languages.value', compact('lang', 'lang_keys'));
+    }
+
+    public function update_value(Request $request)
+    {
+        $array = $request->except(['_token',]);
+
+        $language=Language::all();
+        $collection = collect($array['name']);
+        $collectionLang = collect($array['lang']);
+
+
+        foreach ($collectionLang as $key=> $item){
+            $combined[$key] = $collection->combine($item);
+        }
+
+        foreach ($language as $key => $item){
+            //dd($combined[$key]);
+            $item->update([
+                'language_value'=>json_encode($combined[$key])
+            ]);
+        }
+
+        return redirect()->back();
+
     }
 }

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('slug')->nullable();
             $table->string('img')->nullable();
+            $table->json('language_value')->nullable();
         });
     }
 
