@@ -12,14 +12,14 @@ use Psy\Util\Str;
 
 class DashboardController extends Controller
 {
-    public $slug;
+
     public function __construct()
     {
         if (empty(session('lang_slug'))) {
             $settings = Setting::where('default_lang', '1')->with('lang')->first();
             session(['lang_slug' => $settings->lang->slug]);
         }
-        $this->slug=session('lang_slug');
+        $slug=session('lang_slug');
     }
 
     /**
@@ -29,7 +29,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $slug=$this->slug;
+        $slug=session('lang_slug');
         $data = Category::where('parent_id', 0)->with(['category_language' => function ($query) use ($slug) {
             $query->where('language_slug', $slug);
         }])->get();
@@ -49,7 +49,6 @@ class DashboardController extends Controller
     }
     public function created($id=0)
     {
-
         $subId=$id;
         return view('admin.control.create',compact('subId'));
     }
@@ -119,7 +118,7 @@ class DashboardController extends Controller
      */
     public function edit(Request $request, $id)
     {
-        $slug = $this->slug;
+        $slug = session('lang_slug');
         $data = Category::with(['category_language' => function ($query) use ($slug) {
             $query->where('language_slug', $slug);
         }])->find($request->get('id'));
@@ -159,7 +158,7 @@ class DashboardController extends Controller
             }
         }
         $category->update($data);
-        $category->category_language()->where('language_slug',$this->slug)->update($data_category);
+        $category->category_language()->where('language_slug',session('lang_slug'))->update($data_category);
 
 
         return response()->json([
@@ -186,6 +185,10 @@ class DashboardController extends Controller
 
     public function subcategory($id)
     {
+
+        if($id==="0"){
+            return redirect()->route('admin.control.index');
+        }
         $slug = session('lang_slug');
 
         $data = Category::where('parent_id', $id)->with(['category_language' => function ($query) use ($slug) {

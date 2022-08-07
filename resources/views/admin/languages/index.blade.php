@@ -172,10 +172,13 @@
     <!-- Modal New Record -->
     <div class="modal fade" id="editmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-xl modal-dialog-scrollable">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                    <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md" data-dismiss="modal">
+            <div class="modal-content" style="overflow: initial !important; font-size: larger">
+                <div class="modal-header ribbon ribbon-top ribbon-ver">
+                    {{--<h5 class="modal-title " id="exampleModalLabel">Dil Güncelle</h5>--}}
+                    <div class="ribbon-target bg-warning" style="top: -2px; left: 20px;">
+                        Dil Düzenle
+                    </div>
+                    <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md ml-auto" data-dismiss="modal">
                         <i class="ki ki-close icon-1x"></i>
                     </button>
                 </div>
@@ -238,7 +241,13 @@
 
                         </div>
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-success mr-2">Submit</button>
+                            <button type="submit" class="btn btn-success mr-2">
+                                <a class="btn btn-icon btn-light-success btn-xs pulse pulse-success">
+                                    <i class="flaticon2-checkmark"></i>
+                                    <span class="pulse-ring"></span>
+                                </a>
+                                Kaydet
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -344,6 +353,7 @@
         }
 
         function edit(id) {
+            let imageUrl='{{asset('assets/admin/media/svg/icons/Files/image_back.png')}}'
              $.ajax({
                  type: 'GET',
                  url: '{{route('admin.lang.edit',1)}}',
@@ -353,7 +363,10 @@
                  Id=id;
                 $("input[name='name']").val(response.data.name);
                 $("input[name='slug']").val(response.data.slug);
-                $('#img').parent().parent().find("div").css('background-image', 'url(' + response.data.img + ')');
+                if (response.data.img!==""){
+                    imageUrl=response.data.img;
+                }
+                $('#img').parent().parent().find("div").css('background-image', 'url(' + imageUrl + ')');
                 $('#edit_form').attr('action', window.location.href + '/' + id);
                 $('#img').attr('value', response.data.img);
             }).fail(function (err) {

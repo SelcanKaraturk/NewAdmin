@@ -155,7 +155,10 @@ class LanguageController extends Controller
 
 
         foreach ($collectionLang as $key=> $item){
-            $combined[$key] = $collection->combine($item);
+            $combined[$key] = $collection->combine($item)->filter(function ($value, $key) {
+                return $key!=="";
+            });
+
         }
 
         foreach ($language as $key => $item){
@@ -167,5 +170,13 @@ class LanguageController extends Controller
 
         return redirect()->back();
 
+    }
+
+    public function changeLang($id)
+    {
+        $lang=Language::find($id);
+        session(['lang_slug'=>$lang->slug]);
+
+        return redirect()->route('admin.control.index');
     }
 }

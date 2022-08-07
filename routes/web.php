@@ -34,6 +34,7 @@ Route::prefix('admin')->name('admin.')->group(function (){
 
     Route::get('lang/value', [LanguageController::class,'value'])->name('lang.value');
     Route::post('lang/value', [LanguageController::class,'update_value'])->name('lang.value.update');
+    Route::get('lang/changelang/{id}',[LanguageController::class,'changeLang'])->name('lang.change');
     Route::resource('lang', LanguageController::class);
 
 });
