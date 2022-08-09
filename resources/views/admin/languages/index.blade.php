@@ -20,7 +20,7 @@
                     <div class="row align-items-center">
                         <div class="col-lg-9 col-xl-8">
                             <div class="row align-items-center">
-                                <div class="col-md-4 my-2 my-md-0">
+                                {{--<div class="col-md-4 my-2 my-md-0">
                                     <div class="input-icon">
                                         <input type="text" class="form-control" placeholder="Search..."
                                                id="kt_datatable_search_query"/>
@@ -28,29 +28,26 @@
 																	<i class="flaticon2-search-1 text-muted"></i>
 																</span>
                                     </div>
-                                </div>
+                                </div>--}}
                                 <div class="col-md-4 my-2 my-md-0">
                                     <div class="d-flex align-items-center">
                                         <label class="mr-3 mb-0 d-none d-md-block">Status:</label>
                                         <select class="form-control" id="kt_datatable_search_status">
                                             <option value="">All</option>
-                                            <option value="1">Pending</option>
-                                            <option value="2">Delivered</option>
-                                            <option value="3">Canceled</option>
-                                            <option value="4">Success</option>
-                                            <option value="5">Info</option>
-                                            <option value="6">Danger</option>
+                                            <option value="aktif">Aktif</option>
+                                            <option value="pasif">Pasif</option>
                                         </select>
                                     </div>
                                 </div>
+
                                 <div class="col-md-4 my-2 my-md-0">
                                     <div class="d-flex align-items-center">
-                                        <label class="mr-3 mb-0 d-none d-md-block">Type:</label>
+                                        <label class="mr-3 mb-0 d-none d-md-block">Dil:</label>
                                         <select class="form-control" id="kt_datatable_search_type">
                                             <option value="">All</option>
-                                            <option value="1">Online</option>
-                                            <option value="2">Retail</option>
-                                            <option value="3">Direct</option>
+                                            @foreach($data as $item)
+                                            <option value="{{$item->name}}">{{$item->name}}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -93,8 +90,8 @@
                     <tr>
                         <th title="Field #1">İd</th>
                         <th title="Field #2">Bayrak</th>
-                        <th title="Field #3">Ad</th>
-                        <th title="Field #4">Varsayılan Dil Yap</th>
+                        <th title="Field #3" data-field="Kategori Türü">Ad</th>
+                        <th title="Field #4" data-field="Aktif/Pasif">Varsayılan Dil Yap</th>
                         <th title="Field #5">Aksiyonlar</th>
 
                     </tr>
@@ -110,7 +107,7 @@
                                         <label>
                                             <input type="checkbox"
                                                    {{$item->settings->default_lang==="1"?'checked':''}} id="status{{$item->id}}"
-                                                   onchange="changeLanguages({{$item->id}})"
+                                                   onchange="changeLanguages({{$item->id}})" value="{{$item->settings->default_lang==="1"?'aktif':'pasif'}}"
                                                    name="status"/>
                                             <span></span>
                                         </label>
@@ -172,7 +169,7 @@
     <!-- Modal New Record -->
     <div class="modal fade" id="editmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-xl modal-dialog-scrollable">
-            <div class="modal-content" style="overflow: initial !important; font-size: larger">
+            <div class="modal-content">
                 <div class="modal-header ribbon ribbon-top ribbon-ver">
                     {{--<h5 class="modal-title " id="exampleModalLabel">Dil Güncelle</h5>--}}
                     <div class="ribbon-target bg-warning" style="top: -2px; left: 20px;">

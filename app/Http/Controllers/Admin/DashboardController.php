@@ -32,7 +32,8 @@ class DashboardController extends Controller
         $slug=session('lang_slug');
         $data = Category::where('parent_id', 0)->with(['category_language' => function ($query) use ($slug) {
             $query->where('language_slug', $slug);
-        }])->get();
+        },'block'])->get();
+        //dd($data);
 
         return view('admin.control.index', compact('data', 'slug'));
     }

@@ -24,7 +24,8 @@ class DatabaseSeeder extends Seeder
             LanguageSeeder::class,
             CategorySeeder::class,
             CategoryLanguageSeeder::class,
-            SettingSeeder::class
+            SettingSeeder::class,
+            BlockSeeder::class
         ]);
     }
 }

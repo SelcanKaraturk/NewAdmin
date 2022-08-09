@@ -92,11 +92,12 @@ var KTDatatableHtmlTableDemo = function() {
     });
 
     $('#kt_datatable_search_status').on('change', function() {
-      datatable.search($(this).val().toLowerCase(), 'Status');
+        //console.log($(this).val());
+      datatable.search($(this).val().toLowerCase(), 'Aktif/Pasif');
     });
 
     $('#kt_datatable_search_type').on('change', function() {
-      datatable.search($(this).val().toLowerCase(), 'Type');
+      datatable.search($(this).val().toLowerCase(), 'Kategori Türü');
     });
 
     $('#kt_datatable_search_status, #kt_datatable_search_type').selectpicker();

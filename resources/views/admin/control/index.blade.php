@@ -31,26 +31,22 @@
                                 </div>
                                 <div class="col-md-4 my-2 my-md-0">
                                     <div class="d-flex align-items-center">
-                                        <label class="mr-3 mb-0 d-none d-md-block">Status:</label>
+                                        <label class="mr-3 mb-0 d-none d-md-block">Durum:</label>
                                         <select class="form-control" id="kt_datatable_search_status">
                                             <option value="">All</option>
-                                            <option value="1">Pending</option>
-                                            <option value="2">Delivered</option>
-                                            <option value="3">Canceled</option>
-                                            <option value="4">Success</option>
-                                            <option value="5">Info</option>
-                                            <option value="6">Danger</option>
+                                            <option value="aktif">Aktif</option>
+                                            <option value="pasif">Pasif</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-4 my-2 my-md-0">
                                     <div class="d-flex align-items-center">
-                                        <label class="mr-3 mb-0 d-none d-md-block">Type:</label>
+                                        <label class="mr-3 mb-0 d-none d-md-block">Tür:</label>
                                         <select class="form-control" id="kt_datatable_search_type">
                                             <option value="">All</option>
-                                            <option value="1">Online</option>
-                                            <option value="2">Retail</option>
-                                            <option value="3">Direct</option>
+                                            @foreach(Block() as $item)
+                                            <option value="{{$item->name}}">{{$item->name}}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -125,13 +121,13 @@
                             <td>{{$item->category_language->name}}</td>
                             <td>{{$item->id}}</td>
                             <td>{{Str::upper($item->category_language->language_slug)}}</td>
-                            <td>$22672.60</td>
+                            <td>{{$item->block->name}}</td>
                             <td>{{date('d/m/Y', strtotime($item->created_at))}}</td>
                             <td>
                                 <span class="switch switch-md switch-outline switch-icon switch-success">
                                         <label>
                                             <input type="checkbox" id="status{{$item->id}}"
-                                                   onchange="changeStatus({{$item->id}})"
+                                                   onchange="changeStatus({{$item->id}})" value="{{$item->status==='1'?'aktif':'pasif'}}"
                                                    {{$item->status==='1'?'checked':''}}  name="status"/>
                                             <span></span>
                                         </label>
@@ -212,9 +208,12 @@
     <div class="modal fade" id="editmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-xl modal-dialog-scrollable">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                    <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md" data-dismiss="modal">
+                <div class="modal-header ribbon ribbon-top ribbon-ver">
+                    {{--<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>--}}
+                    <div class="ribbon-target bg-warning" style="top: -2px; left: 20px;">
+                        Yeni Kayıt Ekle
+                    </div>
+                    <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md ml-auto" data-dismiss="modal">
                         <i class="ki ki-close icon-1x"></i>
                     </button>
                 </div>
@@ -380,7 +379,13 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-success mr-2">Submit</button>
+                            <button type="submit" class="btn btn-success mr-2">
+                                <a class="btn btn-icon btn-light-success btn-xs pulse pulse-success">
+                                    <i class="flaticon2-checkmark"></i>
+                                    <span class="pulse-ring"></span>
+                                </a>
+                                Kaydet
+                            </button>
                         </div>
                     </form>
                 </div>

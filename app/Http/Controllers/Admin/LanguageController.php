@@ -154,6 +154,7 @@ class LanguageController extends Controller
         $collectionLang = collect($array['lang']);
 
 
+
         foreach ($collectionLang as $key=> $item){
             $combined[$key] = $collection->combine($item)->filter(function ($value, $key) {
                 return $key!=="";

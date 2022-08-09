@@ -7,7 +7,7 @@
 @section('content')
     <div class="container">
         <!--begin::Card-->
-{{$subId}}
+
         <div class="card card-custom">
             <div class="card-header flex-wrap border-0 pt-6 pb-0">
 
@@ -173,7 +173,13 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-success mr-2">Kaydet</button>
+                        <button type="submit" class="btn btn-success mr-2">
+                            <a class="btn btn-icon btn-light-success btn-xs pulse pulse-success">
+                                <i class="flaticon2-checkmark"></i>
+                                <span class="pulse-ring"></span>
+                            </a>
+                            Kaydet
+                        </button>
                     </div>
                 </form>
 
