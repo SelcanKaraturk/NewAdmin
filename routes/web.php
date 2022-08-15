@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\GeneralController;
 use App\Http\Controllers\Admin\LanguageController;
 use Illuminate\Support\Facades\Route;
 
@@ -36,6 +37,8 @@ Route::prefix('admin')->name('admin.')->group(function (){
     Route::post('lang/value', [LanguageController::class,'update_value'])->name('lang.value.update');
     Route::get('lang/changelang/{id}',[LanguageController::class,'changeLang'])->name('lang.change');
     Route::resource('lang', LanguageController::class);
+
+    Route::resource('general', GeneralController::class);
 
 });
 
