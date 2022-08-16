@@ -228,7 +228,7 @@
                     processData: false,  // tell jQuery not to process the data
                     contentType: false
                 }).done(function (response) {
-                    //console.log(response);
+                    console.log(response);
                     let imageUrl='{{asset('assets/admin/media/svg/icons/Files/image_back.png')}}'
                     Swal.fire({
                         title:'Ok',
@@ -242,7 +242,17 @@
                     $('.image-input-wrapper').css('background-image','url(' + imageUrl + ')');
                     $('#create_form')[0].reset();
                 }).fail(function (error) {
-                    console.log(error);
+                    if (error.responseText!==""){
+                        let err=JSON.parse(error.responseText);
+                        $('input[name="name"]').focus();
+                        Swal.fire({
+                            title:'Üzgünüm',
+                            text:err.errors.name,
+                            icon:'error',
+                            timer:2500
+                        });
+                    }
+
                 })
             })
         })();

@@ -224,9 +224,7 @@
                                 </div>
                                 <div class="tab-pane fade" id="contact-5" role="tabpanel"
                                      aria-labelledby="contact-tab-5">
-                                    Cillum ad ut irure tempor velit nostrud occaecat ullamco aliqua anim Lorem sint.
-                                    Ipsum
-                                    dolor in occaecat commodo et voluptate minim reprehenderit mollit pariatur.
+                                    Geliştirme Aşamasında :)
                                 </div>
                             </div>
                         </div>

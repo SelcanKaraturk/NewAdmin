@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CategoryCreateRequest;
 use App\Models\Category;
 use App\Models\Language;
 use App\Models\Setting;
@@ -60,8 +61,9 @@ class DashboardController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryCreateRequest $request)
     {
+
         $data = $request->only(['sorted', 'block_id']);
         $data['parent_id'] = $request->get('id');
         $data_category = $request->except(['sorted', 'block_id', '_token', 'seo_link']);
@@ -84,7 +86,7 @@ class DashboardController extends Controller
         }
 
         return response()->json([
-            'message' => 'kayıt işlemi başarılı'
+            'message' => 'Kayıt işlemi başarılı'
         ]);
 
     }
