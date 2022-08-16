@@ -42,7 +42,7 @@
 											</svg>
                                             <!--end::Svg Icon-->
 										</span>
-                        <span class="menu-text">Sİstem Yönetimi</span>
+                        <span class="menu-text">Sistem Yönetimi</span>
                         <i class="menu-arrow"></i>
                     </a>
                     <div class="menu-submenu">
@@ -56,10 +56,10 @@
                                     <span class="menu-text">Genel Ayarlar</span>
                                     <span class="menu-label">
 
-													</span>
+									</span>
                                 </a>
                             </li>
-                            <li class="menu-item" aria-haspopup="true">
+                            {{--<li class="menu-item" aria-haspopup="true">
                                 <a href="{{route('admin.lang.value')}}" class="menu-link">
                                     <i class="menu-bullet menu-bullet-line">
                                         <span></span>
@@ -69,7 +69,7 @@
 
 													</span>
                                 </a>
-                            </li>
+                            </li>--}}
                         </ul>
                     </div>
                 </li>

@@ -16,6 +16,7 @@
                     <a href="{{url()->previous()}}" class="btn btn-success mr-2">Geri Dön</a>
                 </div>
             </div>
+
             <div class="card-body">
                 <form class="form" id="create_form" enctype="multipart/form-data" method="POST"
                       action="{{route('admin.control.store')}}">
@@ -81,14 +82,14 @@
                                     <span
                                         class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
                                         data-action="cancel" data-toggle="tooltip" title="Cancel avatar">
-  <i class="ki ki-bold-close icon-xs text-muted"></i>
- </span>
+                                        <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                        </span>
 
                                     <span
                                         class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
                                         data-action="remove" data-toggle="tooltip" title="Resmi sil">
-  <i class="ki ki-bold-close icon-xs text-muted"></i>
- </span>
+                                        <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                    </span>
                                 </div>
                             </div>
                             <div class="col-lg-4">
@@ -108,14 +109,14 @@
                                     <span
                                         class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
                                         data-action="cancel" data-toggle="tooltip" title="Cancel avatar">
-  <i class="ki ki-bold-close icon-xs text-muted"></i>
- </span>
+                                        <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                    </span>
 
                                     <span
                                         class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
                                         data-action="remove" data-toggle="tooltip" title="Resmi sil">
-  <i class="ki ki-bold-close icon-xs text-muted"></i>
- </span>
+                                        <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                    </span>
                                 </div>
                             </div>
                             <div class="col-lg-4">
@@ -135,14 +136,14 @@
                                     <span
                                         class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
                                         data-action="cancel" data-toggle="tooltip" title="Cancel avatar">
-  <i class="ki ki-bold-close icon-xs text-muted"></i>
- </span>
+                                        <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                    </span>
 
                                     <span
                                         class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
                                         data-action="remove" data-toggle="tooltip" title="Resmi sil">
-  <i class="ki ki-bold-close icon-xs text-muted"></i>
- </span>
+                                        <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -171,6 +172,7 @@
                                    placeholder="seo anahtar kelime"/>
                             <span class="form-text text-muted"></span>
                         </div>
+                        <input type="hidden" name="pId" value="{{$subId}}">
                     </div>
                     <div class="card-footer">
                         <button type="submit" class="btn btn-success mr-2">
@@ -206,55 +208,6 @@
             filebrowserBrowseUrl: '{{ asset('assets/admin/js/ckeditor/ckfinder/ckfinder.html') }}',
             filebrowserUploadUrl: '{{ asset('assets/admin/js/ckeditor/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files') }}'
         });
-
-        (function () {
-
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $('#create_form').submit(function (e) {
-                e.preventDefault();
-                let parentId="{{$subId}}";
-                let data=new FormData(this);
-                data.append('id',parentId)
-                $.ajax({
-                    method: 'POST',
-                    url: $('#create_form').attr('action'),
-                    enctype: 'multipart/form-data',
-                    data: data,
-                    dataType:'JSON',
-                    processData: false,  // tell jQuery not to process the data
-                    contentType: false
-                }).done(function (response) {
-                    console.log(response);
-                    let imageUrl='{{asset('assets/admin/media/svg/icons/Files/image_back.png')}}'
-                    Swal.fire({
-                        title:'Ok',
-                        text:response.message,
-                        icon:'success',
-                        timer:2500
-                    })
-                    $('#file').val('');
-                    $('#file2').val('');
-                    $('#file3').val('');
-                    $('.image-input-wrapper').css('background-image','url(' + imageUrl + ')');
-                    $('#create_form')[0].reset();
-                }).fail(function (error) {
-                    if (error.responseText!==""){
-                        let err=JSON.parse(error.responseText);
-                        $('input[name="name"]').focus();
-                        Swal.fire({
-                            title:'Üzgünüm',
-                            text:err.errors.name,
-                            icon:'error',
-                            timer:2500
-                        });
-                    }
-
-                })
-            })
-        })();
     </script>
+    <script src="{{asset('assets/admin/js/control-create.js')}}"></script>
 @endsection
