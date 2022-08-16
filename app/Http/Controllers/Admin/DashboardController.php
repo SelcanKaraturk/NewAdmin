@@ -15,11 +15,11 @@ class DashboardController extends Controller
 
     public function __construct()
     {
-        if (empty(session('lang_slug'))) {
+       /* if (empty(session('lang_slug'))) {
             $settings = Setting::where('default_lang', '1')->with('lang')->first();
             session(['lang_slug' => $settings->lang->slug]);
         }
-        $slug=session('lang_slug');
+        $slug=session('lang_slug');*/
     }
 
     /**
@@ -62,10 +62,6 @@ class DashboardController extends Controller
      */
     public function store(Request $request)
     {
-        /*return response()->json([
-            'message' => $request->all()
-        ]);*/
-        //dd($request->all());
         $data = $request->only(['sorted', 'block_id']);
         $data['parent_id'] = $request->get('id');
         $data_category = $request->except(['sorted', 'block_id', '_token', 'seo_link']);

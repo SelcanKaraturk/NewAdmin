@@ -65,6 +65,7 @@ class LanguageController extends Controller
         $langId = Language::with('settings')->find($request->get('id'));
         $lang = Language::with('settings')->where('id', '!=', $langId->id)->get();
         $langId->settings()->update(['default_lang' => '1']);
+        session(['lang_slug'=>$langId->slug]);
 
         foreach ($lang as $item) {
             $item->settings()->update(['default_lang' => '0']);

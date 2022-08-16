@@ -18,9 +18,10 @@ return new class extends Migration
             $table->unsignedInteger('language_id');
             $table->string('logo')->nullable();
             $table->string('footer_logo')->nullable();
+            $table->string('favicon')->nullable();
             $table->string('default_banner')->nullable();
             $table->enum('default_lang',[0,1])->default(0);
-            $table->json('special_fields')->nullable();
+            $table->json('contact_fields')->nullable();
             $table->timestamps();
         });
     }
