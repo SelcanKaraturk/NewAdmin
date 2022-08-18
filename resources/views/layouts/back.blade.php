@@ -1624,11 +1624,6 @@
     let avatar5 = new KTImageInput('kt_image_5');
     let avatar6 = new KTImageInput('kt_image_6');
 
-    CKEDITOR.replace('contents', {
-        height: 250,
-        filebrowserBrowseUrl: '{{ asset('assets/admin/js/ckeditor/ckfinder/ckfinder.html') }}',
-        filebrowserUploadUrl: '{{ asset('assets/admin/js/ckeditor/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files') }}'
-    });
 </script>
 @yield('script')
 

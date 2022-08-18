@@ -176,14 +176,14 @@
                                             <div class="col-lg-6">
                                                 <label>Telefon</label>
                                                 <input type="text" name="contact[phone]"
-                                                       value="{{$language->settings->contact_fields->phone}}"
+                                                       value="{{$language->settings->contact_fields->phone??''}}"
                                                        class="form-control form-control-solid"/>
                                                 <span class="form-text text-muted"></span>
                                             </div>
                                             <div class="col-lg-6">
                                                 <label>Telefon 2</label>
                                                 <input type="text" name="contact[phone2]"
-                                                       value="{{$language->settings->contact_fields->phone2}}"
+                                                       value="{{$language->settings->contact_fields->phone2??''}}"
                                                        class="form-control form-control-solid"/>
                                                 <span class="form-text text-muted"></span>
                                             </div>
@@ -192,14 +192,14 @@
                                             <div class="col-lg-6">
                                                 <label>Email</label>
                                                 <input type="text" name="contact[email]"
-                                                       value="{{$language->settings->contact_fields->email}}"
+                                                       value="{{$language->settings->contact_fields->email??''}}"
                                                        class="form-control form-control-solid"/>
                                                 <span class="form-text text-muted"></span>
                                             </div>
                                             <div class="col-lg-6">
                                                 <label>Email</label>
                                                 <input type="text" name="contact[email2]"
-                                                       value="{{$language->settings->contact_fields->email2}}"
+                                                       value="{{$language->settings->contact_fields->email2??''}}"
                                                        class="form-control form-control-solid"/>
                                                 <span class="form-text text-muted"></span>
                                             </div>
@@ -209,7 +209,7 @@
                                             <label>Adres</label>
                                             <textarea class="form-control form-control-solid" name="contact[address]"
                                                       id="" cols="30"
-                                                      rows="3">{{$language->settings->contact_fields->address}}</textarea>
+                                                      rows="3">{{$language->settings->contact_fields->address??''}}</textarea>
                                             <span class="form-text text-muted"></span>
                                         </div>
 
@@ -217,7 +217,7 @@
                                             <label>Harita iframe</label>
                                             <textarea class="form-control form-control-solid" name="contact[map]" id=""
                                                       cols="30"
-                                                      rows="3">{{$language->settings->contact_fields->map}}</textarea>
+                                                      rows="3">{{$language->settings->contact_fields->map??''}}</textarea>
                                             <span class="form-text text-muted"></span>
                                         </div>
                                         <input type="hidden" name="connect">
@@ -249,8 +249,6 @@
 @endsection
 @section('script')
     <script>
-        let avatar4 = new KTImageInput('kt_image_4');
-        let avatar5 = new KTImageInput('kt_image_5');
-        let avatar6 = new KTImageInput('kt_image_6');
+
     </script>
 @endsection

@@ -196,5 +196,11 @@
 @section('script')
     <!--end::Page Scripts-->
     <script src="{{asset('assets/admin/js/control-create.js')}}"></script>
-
+    <script>
+        CKEDITOR.replace('contents', {
+            height: 250,
+            filebrowserBrowseUrl: '{{ asset('assets/admin/js/ckeditor/ckfinder/ckfinder.html') }}',
+            filebrowserUploadUrl: '{{ asset('assets/admin/js/ckeditor/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files') }}'
+        });
+    </script>
 @endsection

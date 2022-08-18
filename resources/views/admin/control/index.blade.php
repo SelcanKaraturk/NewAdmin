@@ -405,6 +405,11 @@
             $(this).parent().find('input').attr('value','');
         });
 
+        CKEDITOR.replace('contents', {
+            height: 250,
+            filebrowserBrowseUrl: '{{ asset('assets/admin/js/ckeditor/ckfinder/ckfinder.html') }}',
+            filebrowserUploadUrl: '{{ asset('assets/admin/js/ckeditor/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files') }}'
+        });
 
     </script>
 
