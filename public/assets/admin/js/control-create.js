@@ -25,7 +25,15 @@
                  title:'Ok',
                  text:response.message,
                  icon:'success',
-                 timer:2500
+                 showCancelButton: true,
+                 confirmButtonColor: '#2778c4',
+                 cancelButtonColor: '#2778c4',
+                 confirmButtonText: 'Geri Dön',
+                 cancelButtonText:'Ok'
+             }).then((result) => {
+                 if (result.isConfirmed) {
+
+                 }
              })
              $('#file').val('');
              $('#file2').val('');

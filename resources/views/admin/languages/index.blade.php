@@ -258,6 +258,7 @@
     <script src="{{asset('assets/admin/js/html-table.js')}}"></script>
 
     <script>
+
         let file;
         let Id;
         $.ajaxSetup({
@@ -280,7 +281,6 @@
                 processData: false,  // tell jQuery not to process the data
                 contentType: false
             }).done(function (response) {
-                console.log(response);
                 $('#editmodal').modal('hide');
                 Swal.fire({
                     title: 'Ok',
@@ -319,7 +319,7 @@
             } else {
                 status = 0;
             }
-            console.log(status);
+
             $.ajax({
                 type: 'get',
                 url: '{{route('admin.lang.show',1)}}',
@@ -356,11 +356,11 @@
                  url: '{{route('admin.lang.edit',1)}}',
                 data: {id: id}
             }).done(function (response) {
-                //console.log(response);
+                console.log(response.data.img);
                  Id=id;
                 $("input[name='name']").val(response.data.name);
                 $("input[name='slug']").val(response.data.slug);
-                if (response.data.img!==""){
+                if (response.data.img!=="" && response.data.img!==null){
                     imageUrl=response.data.img;
                 }
                 $('#img').parent().parent().find("div").css('background-image', 'url(' + imageUrl + ')');
@@ -373,13 +373,11 @@
 
         }
 
-        let avatar4 = new KTImageInput('kt_image_4');
 
-        $('span[data-action="remove"]').click(function (){
+
+        $('span[data-action="remove"]').on('click',function (){
             $(this).parent().find('input').attr('value','');
-            /*file = $('#img').attr('value');
-            console.log(file);*/
-        })
+        });
 
     </script>
 

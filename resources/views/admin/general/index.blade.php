@@ -14,7 +14,7 @@
                                 <li class="nav-item mb-10">
                                     <a class="nav-link active" id="home-tab-5" data-toggle="tab" href="#logo">
 																			<span class="nav-icon">
-																				<i class="flaticon2-chat-1"></i>
+																				<i class="flaticon-star"></i>
 																			</span>
                                         <span class="nav-text">LOGOLAR</span>
                                     </a>
@@ -61,7 +61,8 @@
                                                         data-action="change" data-toggle="tooltip" title=""
                                                         data-original-title="Resmi değiştir">
                                                         <i class="ki ki-plus text-muted"></i>
-                                                        <input type="file" id="file" value="{{$language->settings->logo??''}}" name="logo"/>
+                                                        <input type="file" id="file"
+                                                               value="{{$language->settings->logo??''}}" name="logo"/>
 
                                                     </label>
 
@@ -94,7 +95,8 @@
                                                         data-action="change" data-toggle="tooltip" title=""
                                                         data-original-title="Resmi değiştir">
                                                         <i class="ki ki-plus text-muted"></i>
-                                                        <input type="file" id="file" name="footer_logo" value="{{$language->settings->footer_logo??''}}"/>
+                                                        <input type="file" id="file" name="footer_logo"
+                                                               value="{{$language->settings->footer_logo??''}}"/>
 
                                                     </label>
 
@@ -127,7 +129,8 @@
                                                         data-action="change" data-toggle="tooltip" title=""
                                                         data-original-title="Resmi değiştir">
                                                         <i class="ki ki-plus text-muted"></i>
-                                                        <input type="file" id="file" name="favicon" value="{{$language->settings->favicon??''}}"/>
+                                                        <input type="file" id="file" name="favicon"
+                                                               value="{{$language->settings->favicon??''}}"/>
 
                                                     </label>
 
@@ -169,45 +172,55 @@
                                           action="{{route('admin.general.store')}}">
                                         @csrf
 
-                                            <div class="form-group row">
-                                                <div class="col-lg-6">
-                                                    <label>Telefon</label>
-                                                    <input type="text" name="contact[phone]" value="{{$language->settings->contact_fields->phone}}" class="form-control form-control-solid"/>
-                                                    <span class="form-text text-muted"></span>
-                                                </div>
-                                                <div class="col-lg-6">
-                                                    <label>Telefon 2</label>
-                                                    <input type="text" name="contact[phone2]" value="{{$language->settings->contact_fields->phone2}}" class="form-control form-control-solid"/>
-                                                    <span class="form-text text-muted"></span>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <div class="col-lg-6">
-                                                    <label>Email</label>
-                                                    <input type="text" name="contact[email]" value="{{$language->settings->contact_fields->email}}" class="form-control form-control-solid"/>
-                                                    <span class="form-text text-muted"></span>
-                                                </div>
-                                                <div class="col-lg-6">
-                                                    <label>Email</label>
-                                                    <input type="text" name="contact[email2]" value="{{$language->settings->contact_fields->email2}}" class="form-control form-control-solid"/>
-                                                    <span class="form-text text-muted"></span>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label>Adres</label>
-                                                <textarea class="form-control form-control-solid" name="contact[address]" id="" cols="30"
-                                                          rows="3">{{$language->settings->contact_fields->address}}</textarea>
+                                        <div class="form-group row">
+                                            <div class="col-lg-6">
+                                                <label>Telefon</label>
+                                                <input type="text" name="contact[phone]"
+                                                       value="{{$language->settings->contact_fields->phone}}"
+                                                       class="form-control form-control-solid"/>
                                                 <span class="form-text text-muted"></span>
                                             </div>
-
-                                            <div class="form-group">
-                                                <label>Harita iframe</label>
-                                                <textarea class="form-control form-control-solid" name="contact[map]" id="" cols="30"
-                                                          rows="3">{{$language->settings->contact_fields->map}}</textarea>
+                                            <div class="col-lg-6">
+                                                <label>Telefon 2</label>
+                                                <input type="text" name="contact[phone2]"
+                                                       value="{{$language->settings->contact_fields->phone2}}"
+                                                       class="form-control form-control-solid"/>
                                                 <span class="form-text text-muted"></span>
                                             </div>
-                                            <input type="hidden" name="connect">
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-lg-6">
+                                                <label>Email</label>
+                                                <input type="text" name="contact[email]"
+                                                       value="{{$language->settings->contact_fields->email}}"
+                                                       class="form-control form-control-solid"/>
+                                                <span class="form-text text-muted"></span>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <label>Email</label>
+                                                <input type="text" name="contact[email2]"
+                                                       value="{{$language->settings->contact_fields->email2}}"
+                                                       class="form-control form-control-solid"/>
+                                                <span class="form-text text-muted"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Adres</label>
+                                            <textarea class="form-control form-control-solid" name="contact[address]"
+                                                      id="" cols="30"
+                                                      rows="3">{{$language->settings->contact_fields->address}}</textarea>
+                                            <span class="form-text text-muted"></span>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Harita iframe</label>
+                                            <textarea class="form-control form-control-solid" name="contact[map]" id=""
+                                                      cols="30"
+                                                      rows="3">{{$language->settings->contact_fields->map}}</textarea>
+                                            <span class="form-text text-muted"></span>
+                                        </div>
+                                        <input type="hidden" name="connect">
 
                                         <div class="">
                                             <button type="submit" class="btn btn-success mr-2 float-right">

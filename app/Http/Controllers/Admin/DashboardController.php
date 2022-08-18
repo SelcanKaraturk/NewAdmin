@@ -44,11 +44,10 @@ class DashboardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+   /* public function create()
     {
-
         return view('admin.control.create');
-    }
+    }*/
     public function created($id=0)
     {
         $subId=$id;
@@ -144,9 +143,8 @@ class DashboardController extends Controller
         //dd($data_category);
         if (count($request->allFiles()) > 0) {
             foreach ($request->allFiles() as $key => $item) {
-                $file = $request->file($key);
-                $fileName = time() . \Str::random(5) . '.' . $file->extension();
-                $path = '/uploads/' . $file->storeAs('image', $fileName);
+                $fileName = time() . \Str::random(5) . '.' . $item->extension();
+                $path = '/uploads/' . $item->storeAs('image', $fileName);
                 $data[$key] = $path;
             }
         }

@@ -397,126 +397,15 @@
 @section('script')
     <!--begin::Page Scripts(used by this page)-->
     <script src="{{asset('assets/admin/js/html-table.js')}}"></script>
-    <!--begin::Page Scripts(used by this page)-->
-    <script src="{{asset('assets/admin/js/ckeditor/ckeditor.js')}}"></script>
+    <script src="{{asset('assets/admin/js/control-edit.js')}}"></script>
     <!--end::Page Scripts-->
     <script>
 
-
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
+        $('span[data-action="remove"]').on('click',function (){
+            $(this).parent().find('input').attr('value','');
         });
-        $('#edit_form').submit(function (e) {
-            e.preventDefault();
-            let file = $('#file').attr('value');
-            let file2 = $('#file2').attr('value');
-            let file3 = $('#file3').attr('value');
-            let contents = CKEDITOR.instances['contents'].getData();
-            //CKEDITOR.instances['contents'].setData(contents);
-            const data = new FormData(this);
-            data.append("file", file);
-            data.append("file2", file2);
-            data.append("file3", file3);
-            data.append("contents", contents);
-            $.ajax({
-                method: 'POST',
-                url: $('#edit_form').attr('action'),
-                enctype: 'multipart/form-data',
-                data: data,
-                dataType: 'JSON',
-                processData: false,  // tell jQuery not to process the data
-                contentType: false
-            }).done(function (response) {
-                $('#editmodal').modal('hide');
-                Swal.fire({
-                    title: 'Ok',
-                    text: response.message,
-                    icon: 'success',
-                    timer: 2500
-                })
-            }).fail(function (error) {
-                console.log(error);
-            })
-        })
 
-        function deleteCategory(id) {
-            console.log(id);
-            $.ajax({
-                method: 'DELETE',
-                url: "{{route('admin.control.destroy',1)}}",
-                data: {id: id}
-            }).done(function (response) {
 
-                Swal.fire({
-                    title: 'Ok',
-                    text: response.message,
-                    icon: 'success',
-                    timer: 2500
-                })
-                setTimeout(window.location.reload(), 6000);
-            }).fail(function (err) {
-                console.log(err)
-            })
-        }
-
-        function changeStatus(id) {
-            let status;
-            if ($('#status' + id).is(':checked')) {
-                status = 1;
-            } else {
-                status = 0;
-            }
-            $.ajax({
-                type: 'get',
-                url: '{{route('admin.control.show',1)}}',
-                data: {id: id, status: status}
-            }).done(function (response) {
-                console.log(response)
-            }).fail(function (error) {
-                console.log(error)
-            })
-
-        }
-
-        function edit(id) {
-            $.ajax({
-                type: 'GET',
-                url: '{{route('admin.control.edit',1)}}',
-                data: {id: id}
-            }).done(function (response) {
-                $("input[name='name']").val(response.data.category_language.name);
-                $("input[name='seo_title']").val(response.data.category_language.seo_title);
-                $("input[name='seo_description']").val(response.data.category_language.seo_description);
-                $("input[name='seo_keywords']").val(response.data.category_language.seo_keywords);
-                $("input[name='sorted']").val(response.data.sorted);
-                $("input[name='url']").val(response.data.category_language.url);
-                $("textarea[name='description']").val(response.data.category_language.description);
-                CKEDITOR.instances['contents'].setData(response.data.category_language.contents);
-                $('#file').parent().parent().find("div").css('background-image', 'url(' + response.data.file + ')');
-                $('#file2').parent().parent().find("div").css('background-image', 'url(' + response.data.file2 + ')');
-                $('#file3').parent().parent().find("div").css('background-image', 'url(' + response.data.file3 + ')');
-                $('#edit_form').attr('action', '{{route('admin.control.index')}}' + '/' + id);
-                $('#file').attr('value', response.data.file);
-                $('#file2').attr('value', response.data.file2);
-                $('#file3').attr('value', response.data.file3);
-            }).fail(function (err) {
-                console.log(err);
-            })
-            $('#editmodal').modal('show');
-
-        }
-
-        let avatar4 = new KTImageInput('kt_image_4');
-        let avatar5 = new KTImageInput('kt_image_5');
-        let avatar6 = new KTImageInput('kt_image_6');
-
-        CKEDITOR.replace('contents', {
-            height: 250,
-            filebrowserBrowseUrl: '{{ asset('assets/admin/js/ckeditor/ckfinder/ckfinder.html') }}',
-            filebrowserUploadUrl: '{{ asset('assets/admin/js/ckeditor/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files') }}'
-        });
     </script>
 
 @endsection
